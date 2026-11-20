@@ -1,0 +1,570 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:models="using:CoffeeMC.App.Models"
+        x:Class="CoffeeMC.App.Views.MainWindow"
+        Title="Coffee MC"
+        Width="920" Height="600"
+        MinWidth="640" MinHeight="420"
+        WindowDecorations="None"
+        Opacity="0"
+        Background="Transparent">
+
+    <Window.Transitions>
+        <Transitions>
+            <DoubleTransition Property="Opacity" Duration="0:0:0.25"/>
+        </Transitions>
+    </Window.Transitions>
+
+    <Grid x:Name="ResizeGrid" RowDefinitions="6,*,6" ColumnDefinitions="6,*,6">
+
+        <Rectangle Grid.Row="0" Grid.Column="0" Fill="Transparent" Cursor="TopLeftCorner"
+                   PointerPressed="OnResizeTopLeft"/>
+        <Rectangle Grid.Row="0" Grid.Column="1" Fill="Transparent" Cursor="TopSide"
+                   PointerPressed="OnResizeTop"/>
+        <Rectangle Grid.Row="0" Grid.Column="2" Fill="Transparent" Cursor="TopRightCorner"
+                   PointerPressed="OnResizeTopRight"/>
+
+        <Rectangle Grid.Row="1" Grid.Column="0" Fill="Transparent" Cursor="LeftSide"
+                   PointerPressed="OnResizeLeft"/>
+        <Rectangle Grid.Row="1" Grid.Column="2" Fill="Transparent" Cursor="RightSide"
+                   PointerPressed="OnResizeRight"/>
+
+        <Rectangle Grid.Row="2" Grid.Column="0" Fill="Transparent" Cursor="BottomLeftCorner"
+                   PointerPressed="OnResizeBottomLeft"/>
+        <Rectangle Grid.Row="2" Grid.Column="1" Fill="Transparent" Cursor="BottomSide"
+                   PointerPressed="OnResizeBottom"/>
+        <Rectangle Grid.Row="2" Grid.Column="2" Fill="Transparent" Cursor="BottomRightCorner"
+                   PointerPressed="OnResizeBottomRight"/>
+
+        <Border x:Name="MainContentBorder" Grid.Row="1" Grid.Column="1"
+                CornerRadius="8" ClipToBounds="True"
+                Background="{DynamicResource BackgroundBrush}">
+            <Grid RowDefinitions="36,*">
+
+                <Border Grid.Row="0"
+                        Background="{DynamicResource PanelBrush}"
+                        PointerPressed="OnTitleBarPointerPressed">
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+                        <Button Grid.Column="0" Classes="titlebar" Content="☰" Click="OnToggleSidebarClick"
+                                Width="40" Height="36"
+                                HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                FontSize="14" Background="Transparent" Foreground="{DynamicResource TextBrush}"/>
+                        <TextBlock Grid.Column="1"
+                                   Text="Coffee MC"
+                                   VerticalAlignment="Center"
+                                   Margin="12,0,0,0"
+                                   Foreground="{DynamicResource TextBrush}"
+                                   FontSize="13"/>
+                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                            <Button Classes="titlebar" Content="—" Click="OnMinimizeClick"
+                                    Width="46" Height="36"
+                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                    FontSize="14" Background="Transparent" Foreground="{DynamicResource TextBrush}"/>
+                            <Button Classes="titlebar" Content="☐" Click="OnMaximizeClick"
+                                    Width="46" Height="36"
+                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                    FontSize="12" Background="Transparent" Foreground="{DynamicResource TextBrush}"/>
+                            <Button Classes="titlebar titlebar-close" Content="✕" Click="OnCloseClick"
+                                    Width="46" Height="36"
+                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                    FontSize="14" Background="Transparent" Foreground="{DynamicResource TextBrush}"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <Grid Grid.Row="1" ColumnDefinitions="Auto,*">
+
+                    <Border x:Name="SidebarBorder" Grid.Column="0"
+                            Width="200" ClipToBounds="True"
+                            Background="{DynamicResource PanelBrush}"
+                            BorderBrush="{DynamicResource BorderColorBrush}"
+                            BorderThickness="0,0,1,0">
+                        <Border.Transitions>
+                            <Transitions>
+                                <DoubleTransition Property="Width" Duration="0:0:0.22" Easing="CubicEaseOut"/>
+                            </Transitions>
+                        </Border.Transitions>
+                        <StackPanel Margin="12,16,12,0" Spacing="4" MinWidth="176">
+                            <Button Classes="nav" Click="OnNavClick" Tag="Home"
+                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                                    Padding="12,10" Background="Transparent" Foreground="{DynamicResource TextBrush}">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <Path x:Name="NavHomeIcon" Width="16" Height="16" Stretch="Uniform" Fill="Transparent"
+                                          Stroke="{DynamicResource TextBrush}" StrokeThickness="1.8" StrokeLineCap="Round"
+                                          Data="M3 11 L12 4 L21 11 M5 10 L5 20 L19 20 L19 10 M9 20 L9 14 L15 14 L15 20"/>
+                                    <TextBlock x:Name="NavHomeEmoji" IsVisible="False" Width="16" FontSize="14" TextAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="NavHomeText" Text="{DynamicResource Nav_Home}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Classes="nav" Click="OnNavClick" Tag="Profiles"
+                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                                    Padding="12,10" Background="Transparent" Foreground="{DynamicResource TextBrush}">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <Path x:Name="NavProfilesIcon" Width="16" Height="16" Stretch="Uniform" Fill="Transparent"
+                                          Stroke="{DynamicResource TextBrush}" StrokeThickness="1.8" StrokeLineCap="Round"
+                                          Data="M9 4 L15 4 L15 9 L9 9 Z M5 20 L7 13 L17 13 L19 20 Z"/>
+                                    <TextBlock x:Name="NavProfilesEmoji" IsVisible="False" Width="16" FontSize="14" TextAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="NavProfilesText" Text="{DynamicResource Nav_Profiles}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Classes="nav" Click="OnNavClick" Tag="Console"
+                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                                    Padding="12,10" Background="Transparent" Foreground="{DynamicResource TextBrush}">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <Path x:Name="NavConsoleIcon" Width="16" Height="16" Stretch="Uniform" Fill="Transparent"
+                                          Stroke="{DynamicResource TextBrush}" StrokeThickness="1.8" StrokeLineCap="Round"
+                                          Data="M5 3 L19 3 L19 21 L5 21 Z M8 8 L16 8 M8 12 L16 12 M8 16 L13 16"/>
+                                    <TextBlock x:Name="NavConsoleEmoji" IsVisible="False" Width="16" FontSize="14" TextAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="NavConsoleText" Text="{DynamicResource Nav_Console}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Classes="nav" Click="OnNavClick" Tag="Settings"
+                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                                    Padding="12,10" Background="Transparent" Foreground="{DynamicResource TextBrush}">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <Path x:Name="NavSettingsIcon" Width="16" Height="16" Stretch="Uniform" Fill="{DynamicResource TextBrush}"
+                                          Stroke="{DynamicResource TextBrush}" StrokeThickness="1.6" StrokeLineCap="Round"
+                                          Data="M4 6 L20 6 M4 12 L20 12 M4 18 L20 18 M7 4 L11 4 L11 8 L7 8 Z M13 10 L17 10 L17 14 L13 14 Z M9 16 L13 16 L13 20 L9 20 Z"/>
+                                    <TextBlock x:Name="NavSettingsEmoji" IsVisible="False" Width="16" FontSize="14" TextAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="NavSettingsText" Text="{DynamicResource Nav_Settings}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Border>
+
+                    <Grid Grid.Column="1">
+
+                        <Canvas x:Name="DecorCanvas" IsHitTestVisible="False" ClipToBounds="True"/>
+
+                        <StackPanel x:Name="HomePanel"
+                                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                                    Spacing="4" Width="340" Opacity="1">
+                            <StackPanel.Transitions>
+                                <Transitions>
+                                    <DoubleTransition Property="Opacity" Duration="0:0:0.15"/>
+                                </Transitions>
+                            </StackPanel.Transitions>
+
+                            <Path Data="M0,20 C 15,0 35,0 45,14 C 55,28 75,28 90,10"
+                                  Stroke="{DynamicResource AccentBrush}" StrokeThickness="2"
+                                  HorizontalAlignment="Center" Opacity="0.7"/>
+                            <TextBlock x:Name="HomeTitleText" Text="Coffee MC" FontSize="26"
+                                       Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Center"
+                                       PointerPressed="OnHomeTitlePressed"
+                                       Margin="0,0,0,4"/>
+                            <Path Data="M90,10 C 75,28 55,28 45,14 C 35,0 15,0 0,20"
+                                  Stroke="{DynamicResource AccentBrush}" StrokeThickness="2"
+                                  HorizontalAlignment="Center" Opacity="0.7" Margin="0,0,0,20"/>
+
+                            <TextBlock Text="{DynamicResource Home_AccountLabel}" FontSize="12" Opacity="0.6"
+                                       Foreground="{DynamicResource TextBrush}" Margin="0,0,0,4"/>
+                            <ComboBox x:Name="HomeAccountCombo" HorizontalAlignment="Stretch"
+                                      SelectionChanged="OnHomeAccountChanged" Margin="0,0,0,14">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate x:DataType="models:AccountEntry">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Username}" VerticalAlignment="Center"
+                                                       TextTrimming="CharacterEllipsis" MaxWidth="240"/>
+                                            <Border Background="{DynamicResource AccentBrush}" CornerRadius="4" Padding="5,1" Margin="8,0,0,0"
+                                        VerticalAlignment="Center" IsVisible="{Binding IsMicrosoft}"
+                                        ToolTip.Tip="Microsoft">
+                                    <TextBlock Text="MS" FontSize="10" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+                                </Border>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+
+                            <TextBlock Text="{DynamicResource Home_ProfileLabel}" FontSize="12" Opacity="0.6"
+                                       Foreground="{DynamicResource TextBrush}" Margin="0,0,0,4"/>
+                            <ComboBox x:Name="HomeProfileCombo" HorizontalAlignment="Stretch"
+                                      SelectionChanged="OnHomeProfileChanged" Margin="0,0,0,20">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate x:DataType="models:GameProfile">
+                                        <TextBlock Text="{Binding}" TextTrimming="CharacterEllipsis"
+                                                   MaxWidth="290" ToolTip.Tip="{Binding}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+
+                            <Button Classes="accent" Content="{DynamicResource Home_PlayButton}" Click="OnPlayClick"
+                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Padding="0,10"
+                                    Background="{DynamicResource AccentBrush}"
+                                    Foreground="{DynamicResource TextBrush}" FontWeight="Bold"/>
+
+                            <TextBlock x:Name="HomeQuoteText" Text="Welcome to CoffeeMC"
+                                       FontSize="11" Opacity="0.6" Margin="0,10,0,0"
+                                       HorizontalAlignment="Center"
+                                       Foreground="{DynamicResource TextBrush}"/>
+
+                            <Button Classes="nav" Content="{DynamicResource Home_ManageProfiles}" Click="OnNavClick" Tag="Profiles"
+                                    HorizontalAlignment="Center" Padding="10,6" Margin="0,10,0,0"
+                                    Background="Transparent" Foreground="{DynamicResource TextBrush}" FontSize="12" Opacity="0.7"/>
+
+                        </StackPanel>
+
+                        <Grid x:Name="ConsolePanel" IsVisible="False" RowDefinitions="Auto,Auto,Auto,*,Auto" Opacity="1">
+                            <Grid.Transitions>
+                                <Transitions>
+                                    <DoubleTransition Property="Opacity" Duration="0:0:0.15"/>
+                                </Transitions>
+                            </Grid.Transitions>
+
+                            <TextBlock Grid.Row="0" x:Name="ConsoleTitleText" Text="{DynamicResource Nav_Console}" FontSize="20"
+                                       Margin="24,20,24,10" Foreground="{DynamicResource TextBrush}"/>
+
+                            <Grid Grid.Row="1" ColumnDefinitions="*,Auto" Margin="24,0,24,10">
+                                <WrapPanel Grid.Column="0" x:Name="LogSessionTabsPanel" Orientation="Horizontal"/>
+                                <Button Grid.Column="1" x:Name="KillGameButton" Classes="danger"
+                                        Content="{DynamicResource Console_KillGame}" Click="OnKillGameClick"
+                                        Padding="10,6" Background="Transparent" Foreground="#E05050" FontSize="12"/>
+                            </Grid>
+
+                            <Grid Grid.Row="2" ColumnDefinitions="*,Auto" Margin="24,0,24,8">
+                                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14">
+                                    <CheckBox x:Name="AutoScrollCheck" Content="{DynamicResource Console_AutoScroll}" IsChecked="True"
+                                              Click="OnAutoScrollToggled" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                    <CheckBox x:Name="WrapLinesCheck" Content="{DynamicResource Console_WrapLines}" IsChecked="True"
+                                              Click="OnWrapToggled" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                    <CheckBox x:Name="ColorLinesCheck" Content="{DynamicResource Console_ColorLines}" IsChecked="True"
+                                              Click="OnColorToggled" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                    <Button Classes="secondary" Content="{DynamicResource Console_Copy}" Click="OnCopyLogClick"
+                                            Padding="10,6" Background="{DynamicResource PanelBrush}"
+                                            Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                    <Button Classes="danger" Content="{DynamicResource Console_Clear}" Click="OnClearLogClick"
+                                            Padding="10,6" Background="Transparent" Foreground="#E05050" FontSize="12"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <Border Grid.Row="3" Margin="24,0,24,8" CornerRadius="8" Background="{DynamicResource PanelBrush}">
+                                <ItemsControl x:Name="LogList" Padding="10"
+                                              FontFamily="Consolas,monospace" FontSize="12">
+                                    <ItemsControl.Template>
+                                        <ControlTemplate>
+                                            <ScrollViewer x:Name="PART_LogScroll" Padding="{TemplateBinding Padding}"
+                                                          HorizontalScrollBarVisibility="Auto">
+                                                <ItemsPresenter ItemsPanel="{TemplateBinding ItemsPanel}"/>
+                                            </ScrollViewer>
+                                        </ControlTemplate>
+                                    </ItemsControl.Template>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="models:LogDisplayLine">
+                                            <SelectableTextBlock Text="{Binding Text}"
+                                                                 Foreground="{Binding Foreground}"
+                                                                 FontWeight="{Binding Weight}"
+                                                                 TextWrapping="{Binding Wrapping}"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Border>
+
+                            <Grid Grid.Row="4" ColumnDefinitions="*,Auto" Margin="24,0,24,20">
+                                <TextBox Grid.Column="0" x:Name="LogSearchBox"
+                                         PlaceholderText="{DynamicResource Console_SearchPlaceholder}" TextChanged="OnLogSearchChanged"/>
+                                <Button Grid.Column="1" Classes="secondary" Content="{DynamicResource Console_ScrollBottom}" Click="OnScrollToBottomClick"
+                                        Margin="8,0,0,0" Padding="14,8"
+                                        Background="{DynamicResource PanelBrush}" Foreground="{DynamicResource TextBrush}"/>
+                            </Grid>
+
+                        </Grid>
+
+                        <Grid x:Name="ProfilesPanel" IsVisible="False" RowDefinitions="Auto,*" Opacity="1">
+                            <Grid.Transitions>
+                                <Transitions>
+                                    <DoubleTransition Property="Opacity" Duration="0:0:0.15"/>
+                                </Transitions>
+                            </Grid.Transitions>
+
+                            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="24,20,24,14" Spacing="10">
+                                <Button Classes="accent" Content="{DynamicResource Profiles_Create}" Click="OnCreateProfileClick"
+                                        Padding="16,9" Background="{DynamicResource AccentBrush}"
+                                        Foreground="{DynamicResource TextBrush}"/>
+                                <Button Classes="secondary" Content="{DynamicResource Profiles_InstallSelected}" Click="OnInstallProfileClick"
+                                        Padding="16,9" Background="{DynamicResource PanelBrush}"
+                                        Foreground="{DynamicResource TextBrush}"/>
+                            </StackPanel>
+                            <ListBox x:Name="ProfilesList" Grid.Row="1" Background="Transparent" Margin="24,0,24,0">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid ColumnDefinitions="*,Auto,Auto,Auto" Margin="0,4">
+                                            <TextBlock Grid.Column="0" Text="{Binding}" TextTrimming="CharacterEllipsis"
+                                                       Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center"/>
+                                            <Button Classes="secondary" Grid.Column="1" Content="✎" Tag="{Binding}"
+                                                    Click="OnEditProfileClick" Background="Transparent"
+                                                    Foreground="{DynamicResource TextBrush}" Padding="10,5"
+                                                    ToolTip.Tip="{DynamicResource Profiles_EditTooltip}"/>
+                                            <Button Classes="danger" Grid.Column="2" Content="✕" Tag="{Binding}"
+                                                    Click="OnDeleteProfileClick" Background="Transparent"
+                                                    Foreground="#E05050" Padding="10,5" Margin="4,0,0,0"/>
+                                            <Button Classes="danger" Grid.Column="3" Content="⏻" Tag="{Binding}"
+                                                    Click="OnKillProfileClick" Background="Transparent"
+                                                    Foreground="#E05050" Padding="10,5" Margin="4,0,0,0"
+                                                    ToolTip.Tip="{DynamicResource Profiles_KillTooltip}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Grid>
+
+                        <Grid x:Name="SettingsPanel" IsVisible="False" RowDefinitions="Auto,*" Margin="24,20,24,20" Opacity="1">
+                            <Grid.Transitions>
+                                <Transitions>
+                                    <DoubleTransition Property="Opacity" Duration="0:0:0.15"/>
+                                </Transitions>
+                            </Grid.Transitions>
+
+                            <Border Grid.Row="0" BorderBrush="{DynamicResource BorderColorBrush}" BorderThickness="0,0,0,1" Margin="0,0,0,16">
+                                <StackPanel Orientation="Horizontal" Spacing="2" HorizontalAlignment="Center">
+                                    <ToggleButton x:Name="SettingsTabAppearance" Classes="settingsTab" IsChecked="True"
+                                                  Content="{DynamicResource Settings_Tab_Appearance}" Click="OnSettingsCategoryClick" Tag="Appearance"/>
+                                    <ToggleButton x:Name="SettingsTabGeneral" Classes="settingsTab"
+                                                  Content="{DynamicResource Settings_Tab_General}" Click="OnSettingsCategoryClick" Tag="General"/>
+                                    <ToggleButton x:Name="SettingsTabGame" Classes="settingsTab"
+                                                  Content="{DynamicResource Settings_Tab_Game}" Click="OnSettingsCategoryClick" Tag="Game"/>
+                                    <ToggleButton x:Name="SettingsTabAbout" Classes="settingsTab"
+                                                  Content="{DynamicResource Settings_Tab_About}" Click="OnSettingsCategoryClick" Tag="About"/>
+                                </StackPanel>
+                            </Border>
+
+                            <ScrollViewer Grid.Row="1">
+                                <StackPanel MaxWidth="520">
+
+                                    <StackPanel x:Name="AppearanceSettingsPanel" Classes="settingsSubPanel">
+                                        <Border Classes="settingsCard">
+                                            <StackPanel>
+                                                <TextBlock Classes="cardTitle" Text="{DynamicResource Appearance_ThemeTitle}"/>
+                                                <WrapPanel x:Name="ThemeSwatchesPanel"/>
+                                                <CheckBox x:Name="AutoSeasonalCheck" Click="OnAutoSeasonalClick"
+                                                          Content="{DynamicResource Appearance_AutoSeasonal}"
+                                                          Foreground="{DynamicResource TextBrush}" Margin="0,10,0,0"/>
+                                            </StackPanel>
+                                        </Border>
+
+                                        <Border Classes="settingsCard">
+                                            <StackPanel>
+                                                <TextBlock Classes="cardTitle" Text="{DynamicResource Appearance_AccentTitle}"/>
+                                                <WrapPanel x:Name="AccentSwatchesPanel" Margin="0,0,0,14"/>
+
+                                                <TextBlock Text="{DynamicResource Appearance_CustomColorLabel}" FontSize="12" Opacity="0.6"
+                                                           Foreground="{DynamicResource TextBrush}" Margin="0,0,0,4"/>
+                                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                                    <TextBox x:Name="CustomAccentBox" Width="120" PlaceholderText="#RRGGBB"/>
+                                                    <Button Classes="secondary" Content="{DynamicResource Appearance_Apply}" Click="OnApplyCustomAccentClick"
+                                                            Padding="12,7" Background="{DynamicResource BackgroundBrush}"
+                                                            Foreground="{DynamicResource TextBrush}"/>
+                                                </StackPanel>
+                                                <TextBlock x:Name="CustomAccentErrorText" Foreground="#E05050" FontSize="11"
+                                                           TextWrapping="Wrap" Margin="0,4,0,0" IsVisible="False"/>
+                                            </StackPanel>
+                                        </Border>
+
+                                        <Border Classes="settingsCard">
+                                            <StackPanel>
+                                                <TextBlock Classes="cardTitle" Text="{DynamicResource Appearance_CornerTitle}"/>
+                                                <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,4">
+                                                    <TextBlock Grid.Column="0" Text="{DynamicResource Appearance_CornerRadiusLabel}" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                                    <TextBlock Grid.Column="1" x:Name="CornerRadiusValueText" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                                </Grid>
+                                                <Slider x:Name="CornerRadiusSlider" Minimum="0" Maximum="20"
+                                                        ValueChanged="OnCornerRadiusChanged"/>
+                                                <TextBlock Text="{DynamicResource Appearance_CornerHint}"
+                                                           Foreground="{DynamicResource TextBrush}" Opacity="0.5" FontSize="11" Margin="0,8,0,0"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+
+                                    <StackPanel x:Name="GeneralSettingsPanel" Classes="settingsSubPanel" IsVisible="False">
+                                        <Border Classes="settingsCard">
+                                            <StackPanel>
+                                                <TextBlock Classes="cardTitle" Text="{DynamicResource General_LanguageTitle}"/>
+                                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                                    <ToggleButton x:Name="LanguageRuButton" Classes="settingsTab"
+                                                                  Content="Русский" Tag="ru" Click="OnLanguageButtonClick"/>
+                                                    <ToggleButton x:Name="LanguageEnButton" Classes="settingsTab"
+                                                                  Content="English" Tag="en" Click="OnLanguageButtonClick"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Border>
+
+                                        <Border Classes="settingsCard">
+                                            <StackPanel>
+                                                <TextBlock Classes="cardTitle" Text="{DynamicResource General_AccountsTitle}"/>
+                                                <TextBlock Text="{DynamicResource General_AccountsDescription}"
+                                                           Foreground="{DynamicResource TextBrush}" Opacity="0.6"
+                                                           TextWrapping="Wrap" FontSize="12" Margin="0,0,0,12"/>
+
+                                                <ItemsControl x:Name="AccountsList">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate x:DataType="models:AccountDisplayItem">
+                                                            <Grid ColumnDefinitions="*,Auto,Auto,Auto" Margin="0,6">
+                                                                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                                                                    <TextBlock Text="{Binding DisplayName}"
+                                                                               Foreground="{DynamicResource TextBrush}"
+                                                                               VerticalAlignment="Center"/>
+                                                                    <Border Background="{DynamicResource AccentBrush}" CornerRadius="4" Padding="5,1" Margin="8,0,0,0"
+                                        VerticalAlignment="Center" IsVisible="{Binding IsMicrosoft}"
+                                        ToolTip.Tip="Microsoft">
+                                    <TextBlock Text="MS" FontSize="10" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+                                </Border>
+                                                                </StackPanel>
+                                                                <Button Grid.Column="1" Classes="secondary" Content="{DynamicResource General_Select}"
+                                                                        Tag="{Binding Account}" Click="OnSelectAccountClick"
+                                                                        IsEnabled="{Binding !IsActive}"
+                                                                        Padding="10,5" Background="{DynamicResource BackgroundBrush}"
+                                                                        Foreground="{DynamicResource TextBrush}"/>
+                                                                <Button Grid.Column="2" Classes="secondary" Content="{Binding PinIcon}"
+                                                                        Tag="{Binding Account}" Click="OnSetPinClick"
+                                                                        ToolTip.Tip="{DynamicResource General_PinTooltip}"
+                                                                        Margin="6,0,0,0" Padding="10,5"
+                                                                        Background="{DynamicResource BackgroundBrush}" Foreground="{DynamicResource TextBrush}"/>
+                                                                <Button Grid.Column="3" Classes="danger" Content="✕"
+                                                                        Tag="{Binding Account}" Click="OnDeleteAccountClick"
+                                                                        Margin="6,0,0,0" Padding="10,5"
+                                                                        Background="Transparent" Foreground="#E05050"/>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+
+                                                <TextBlock Text="{DynamicResource General_AddAccountTitle}" FontWeight="Bold"
+                                                           Foreground="{DynamicResource TextBrush}" Margin="0,16,0,8"/>
+                                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                                    <TextBox x:Name="NewAccountNameBox" Width="180" PlaceholderText="{DynamicResource General_NicknamePlaceholder}"/>
+                                                    <Button Classes="accent" Content="{DynamicResource General_Add}" Click="OnAddAccountClick"
+                                                            Padding="14,8" Background="{DynamicResource AccentBrush}"
+                                                            Foreground="{DynamicResource TextBrush}"/>
+                                                    <Button Classes="secondary" Content="{DynamicResource General_MicrosoftLogin}" Click="OnMicrosoftLoginClick"
+                                                            Padding="14,8" Background="{DynamicResource PanelBrush}"
+                                                            Foreground="{DynamicResource TextBrush}"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Border>
+
+                                        <Border Classes="settingsCard">
+                                            <StackPanel>
+                                                <TextBlock Classes="cardTitle" Text="{DynamicResource General_LaunchTitle}"/>
+                                                <RadioButton x:Name="LaunchKeepRadio" GroupName="LaunchBehavior" Content="{DynamicResource General_LaunchKeep}"
+                                                             Tag="Keep" Click="OnLaunchBehaviorChanged"
+                                                             Foreground="{DynamicResource TextBrush}" Margin="0,4"/>
+                                                <RadioButton x:Name="LaunchMinimizeRadio" GroupName="LaunchBehavior" Content="{DynamicResource General_LaunchMinimize}"
+                                                             Tag="Minimize" Click="OnLaunchBehaviorChanged"
+                                                             Foreground="{DynamicResource TextBrush}" Margin="0,4"/>
+                                                <RadioButton x:Name="LaunchCloseRadio" GroupName="LaunchBehavior" Content="{DynamicResource General_LaunchClose}"
+                                                             Tag="Close" Click="OnLaunchBehaviorChanged"
+                                                             Foreground="{DynamicResource TextBrush}" Margin="0,4"/>
+                                            </StackPanel>
+                                        </Border>
+
+                                        <Border Classes="settingsCard">
+                                            <StackPanel>
+                                                <TextBlock Classes="cardTitle" Text="{DynamicResource General_MinecraftFolderTitle}"/>
+                                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                                    <TextBox x:Name="MinecraftPathBox" Width="320" IsReadOnly="True"/>
+                                                    <Button Classes="secondary" Content="{DynamicResource General_Browse}" Click="OnBrowseMinecraftPathClick"
+                                                            Padding="14,8" Background="{DynamicResource BackgroundBrush}"
+                                                            Foreground="{DynamicResource TextBrush}"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Border>
+
+                                        <Border Classes="settingsCard">
+                                            <StackPanel>
+                                                <TextBlock Classes="cardTitle" Text="{DynamicResource General_QuickAccessTitle}"/>
+                                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                                    <Button Classes="secondary" Content="{DynamicResource General_OpenMinecraftFolder}" Click="OnOpenMinecraftFolderClick"
+                                                            Padding="12,8" Background="{DynamicResource BackgroundBrush}"
+                                                            Foreground="{DynamicResource TextBrush}"/>
+                                                    <Button Classes="secondary" Content="{DynamicResource General_OpenLogsFolder}" Click="OnOpenLogsFolderClick"
+                                                            Padding="12,8" Background="{DynamicResource BackgroundBrush}"
+                                                            Foreground="{DynamicResource TextBrush}"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+
+                                    <StackPanel x:Name="GameSettingsPanel" Classes="settingsSubPanel" IsVisible="False">
+                                        <Border Classes="settingsCard">
+                                            <StackPanel>
+                                                <TextBlock Classes="cardTitle" Text="{DynamicResource Game_MemoryTitle}"/>
+
+                                                <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,4">
+                                                    <TextBlock Grid.Column="0" Text="{DynamicResource Game_Minimum}" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                                    <TextBlock Grid.Column="1" x:Name="MinMemoryValueText" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                                </Grid>
+                                                <Slider x:Name="MinMemorySlider" Minimum="128" Maximum="16384" TickFrequency="128"
+                                                        ValueChanged="OnMinMemoryChanged" Margin="0,0,0,14"/>
+
+                                                <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,4">
+                                                    <TextBlock Grid.Column="0" Text="{DynamicResource Game_Maximum}" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                                    <TextBlock Grid.Column="1" x:Name="MaxMemoryValueText" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                                </Grid>
+                                                <Slider x:Name="MaxMemorySlider" Minimum="128" Maximum="16384" TickFrequency="128"
+                                                        ValueChanged="OnMaxMemoryChanged"/>
+
+                                                <TextBlock x:Name="TotalMemoryText"
+                                                           Foreground="{DynamicResource TextBrush}" Opacity="0.5" FontSize="11" Margin="0,10,0,0"/>
+                                                <TextBlock x:Name="MemoryWarningText"
+                                                           Foreground="#E05050" FontSize="12" FontWeight="Bold"
+                                                           TextWrapping="Wrap" Margin="0,6,0,0" IsVisible="False"/>
+
+                                                <TextBlock Text="{DynamicResource Game_MemoryHint}"
+                                                           Foreground="{DynamicResource TextBrush}" Opacity="0.5" FontSize="11" Margin="0,10,0,0"/>
+                                            </StackPanel>
+                                        </Border>
+
+                                        <Border Classes="settingsCard">
+                                            <StackPanel>
+                                                <TextBlock Classes="cardTitle" Text="Java"/>
+                                                <TextBlock Text="{DynamicResource Game_JavaDescription}"
+                                                           Foreground="{DynamicResource TextBrush}" Opacity="0.6"
+                                                           TextWrapping="Wrap" FontSize="12" Margin="0,0,0,10"/>
+                                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                                    <TextBox x:Name="JavaPathBox" Width="260" IsReadOnly="True" PlaceholderText="{DynamicResource Game_JavaPlaceholder}"/>
+                                                    <Button Classes="secondary" Content="{DynamicResource General_Browse}" Click="OnBrowseJavaClick"
+                                                            Padding="12,8" Background="{DynamicResource BackgroundBrush}"
+                                                            Foreground="{DynamicResource TextBrush}"/>
+                                                </StackPanel>
+                                                <Button Classes="secondary" Content="{DynamicResource Java_OpenManager}" Click="OnOpenJavaManagerClick"
+                                                        HorizontalAlignment="Left" Padding="12,8" Margin="0,10,0,0"
+                                                        Background="{DynamicResource BackgroundBrush}" Foreground="{DynamicResource TextBrush}"/>
+                                                <CheckBox x:Name="AutoDownloadJavaCheck" Click="OnAutoDownloadJavaClick"
+                                                          Content="{DynamicResource Java_AutoDownloadSetting}"
+                                                          Foreground="{DynamicResource TextBrush}" Margin="0,10,0,0"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+
+                                    <StackPanel x:Name="AboutSettingsPanel" Classes="settingsSubPanel" IsVisible="False">
+                                        <Border Classes="settingsCard">
+                                            <StackPanel Spacing="6">
+                                                <TextBlock Classes="cardTitle" Text="Coffee MC"/>
+                                                <TextBlock Text="{DynamicResource About_Version}"
+                                                           Foreground="{DynamicResource TextBrush}" FontSize="13"/>
+                                                <TextBlock Text="{DynamicResource About_Description}"
+                                                           Foreground="{DynamicResource TextBrush}" Opacity="0.7"
+                                                           TextWrapping="Wrap" FontSize="12" Margin="0,4,0,0"/>
+                                                <TextBlock Text="{DynamicResource About_MadeWith}" Foreground="{DynamicResource AccentBrush}"
+                                                           FontSize="12" Margin="0,10,0,0"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </ScrollViewer>
+
+                        </Grid>
+
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Border>
+
+    </Grid>
+</Window>

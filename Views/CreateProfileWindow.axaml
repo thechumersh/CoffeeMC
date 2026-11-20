@@ -1,0 +1,90 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="CoffeeMC.App.Views.CreateProfileWindow"
+        Title="{DynamicResource CreateProfile_Title}"
+        Width="480" Height="640"
+        WindowDecorations="None"
+        Opacity="0"
+        Background="Transparent">
+
+    <Window.Transitions>
+        <Transitions>
+            <DoubleTransition Property="Opacity" Duration="0:0:0.25"/>
+        </Transitions>
+    </Window.Transitions>
+
+    <Border CornerRadius="{DynamicResource UiCornerRadius}" ClipToBounds="True"
+            Background="{DynamicResource BackgroundBrush}">
+        <Grid RowDefinitions="36,*">
+
+            <Border Grid.Row="0"
+                    Background="{DynamicResource PanelBrush}"
+                    PointerPressed="OnTitleBarPointerPressed">
+                <Grid ColumnDefinitions="*,Auto">
+                    <TextBlock Grid.Column="0" Text="{DynamicResource CreateProfile_Title}"
+                               VerticalAlignment="Center" Margin="12,0,0,0"
+                               Foreground="{DynamicResource TextBrush}" FontSize="13"/>
+                    <Button Grid.Column="1" Classes="titlebar titlebar-close" Content="✕" Click="OnCancelClick"
+                            Width="46" Height="36"
+                            HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                            FontSize="14" Background="Transparent" Foreground="{DynamicResource TextBrush}"/>
+                </Grid>
+            </Border>
+
+            <Grid Grid.Row="1" Margin="20" RowDefinitions="Auto,Auto,Auto,Auto,Auto,*,Auto,Auto,Auto">
+
+                <TextBlock Grid.Row="0" Text="{DynamicResource CreateProfile_NameLabel}" Foreground="{DynamicResource TextBrush}"/>
+                <TextBox Grid.Row="1" x:Name="NameBox" PlaceholderText="{DynamicResource CreateProfile_NamePlaceholder}" Margin="0,4,0,16"/>
+
+                <TextBlock Grid.Row="2" Text="{DynamicResource CreateProfile_VersionLabel}" Foreground="{DynamicResource TextBrush}"/>
+
+                <WrapPanel Grid.Row="3" Margin="0,8,0,8">
+                    <CheckBox x:Name="FilterRelease" Content="{DynamicResource CreateProfile_FilterRelease}" IsChecked="True"
+                              Click="OnFilterChanged" Foreground="{DynamicResource TextBrush}" Margin="0,0,12,6"/>
+                    <CheckBox x:Name="FilterSnapshot" Content="{DynamicResource CreateProfile_FilterSnapshot}" IsChecked="True"
+                              Click="OnFilterChanged" Foreground="{DynamicResource TextBrush}" Margin="0,0,12,6"/>
+                    <CheckBox x:Name="FilterBeta" Content="{DynamicResource CreateProfile_FilterBeta}" IsChecked="False"
+                              Click="OnFilterChanged" Foreground="{DynamicResource TextBrush}" Margin="0,0,12,6"/>
+                    <CheckBox x:Name="FilterAlpha" Content="{DynamicResource CreateProfile_FilterAlpha}" IsChecked="False"
+                              Click="OnFilterChanged" Foreground="{DynamicResource TextBrush}" Margin="0,0,12,6"/>
+					<CheckBox x:Name="FilterLocal" Content="{DynamicResource CreateProfile_FilterLocal}" IsChecked="False"
+                              Click="OnFilterChanged" Foreground="{DynamicResource TextBrush}" Margin="0,0,12,6"/>
+                </WrapPanel>
+
+                <Grid Grid.Row="4" ColumnDefinitions="*,Auto" Margin="0,0,0,8">
+                    <TextBox x:Name="SearchBox" PlaceholderText="{DynamicResource CreateProfile_SearchPlaceholder}"
+                             TextChanged="OnFilterChanged"/>
+                    <Button Grid.Column="1" Classes="secondary" Content="{DynamicResource Profile_RefreshVersions}"
+                            Click="OnRefreshVersionsClick" Margin="8,0,0,0" Padding="12,0"
+                            VerticalAlignment="Stretch" VerticalContentAlignment="Center"
+                            Background="{DynamicResource PanelBrush}" Foreground="{DynamicResource TextBrush}"/>
+                </Grid>
+
+                <ListBox x:Name="VersionsList" Grid.Row="5" SelectionChanged="OnVersionSelectionChanged"
+                         Background="{DynamicResource PanelBrush}" Margin="0,0,0,16">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" Foreground="{DynamicResource TextBrush}"
+                                       TextWrapping="Wrap" Margin="8,4"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <CheckBox Grid.Row="6" x:Name="InstallCheck" Click="OnInstallCheckClick"
+                          Content="{DynamicResource CreateProfile_InstallImmediately}" IsChecked="True"
+                          Foreground="{DynamicResource TextBrush}" Margin="0,0,0,8"/>
+
+                <TextBlock Grid.Row="7" x:Name="ErrorText" Foreground="#E05050" FontSize="12"
+                           TextWrapping="Wrap" Margin="0,0,0,8" IsVisible="False"/>
+
+                <StackPanel Grid.Row="8" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+                    <Button Classes="secondary" Content="{DynamicResource CreateProfile_Cancel}" Click="OnCancelClick" Padding="14,8"
+                            Background="{DynamicResource PanelBrush}" Foreground="{DynamicResource TextBrush}"/>
+                    <Button Classes="accent" Content="{DynamicResource CreateProfile_Create}" Click="OnCreateClick" Padding="14,8"
+                            Background="{DynamicResource AccentBrush}" Foreground="{DynamicResource TextBrush}"/>
+                </StackPanel>
+
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

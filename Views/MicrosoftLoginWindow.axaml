@@ -1,0 +1,68 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="CoffeeMC.App.Views.MicrosoftLoginWindow"
+        Title="Microsoft"
+        Width="420" Height="340"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False"
+        WindowDecorations="None"
+        Background="Transparent"
+        Opacity="0">
+
+    <Window.Transitions>
+        <Transitions>
+            <DoubleTransition Property="Opacity" Duration="0:0:0.25"/>
+        </Transitions>
+    </Window.Transitions>
+
+    <Border CornerRadius="{DynamicResource UiCornerRadius}" ClipToBounds="True"
+            Background="{DynamicResource BackgroundBrush}">
+    <Grid RowDefinitions="36,*">
+
+        <Border Grid.Row="0" Background="{DynamicResource PanelBrush}" PointerPressed="OnTitleBarPointerPressed">
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock Grid.Column="0" Text="Вход через Microsoft" VerticalAlignment="Center"
+                           Margin="12,0,0,0" Foreground="{DynamicResource TextBrush}" FontSize="13"/>
+                <Button Grid.Column="1" Classes="titlebar titlebar-close" Content="✕" Click="OnCancelClick"
+                        Width="46" Height="36" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        FontSize="14" Background="Transparent" Foreground="{DynamicResource TextBrush}"/>
+            </Grid>
+        </Border>
+
+        <StackPanel Grid.Row="1" Margin="24" Spacing="14" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+            <TextBlock x:Name="StatusText" Text="Получаю код для входа..." FontSize="13"
+                       Foreground="{DynamicResource TextBrush}" TextAlignment="Center" TextWrapping="Wrap"/>
+
+            <Border x:Name="CodeBorder" Background="{DynamicResource PanelBrush}" CornerRadius="8"
+                    Padding="18,12" HorizontalAlignment="Center" IsVisible="False">
+                <TextBlock x:Name="CodeText" FontSize="26" FontWeight="Bold" LetterSpacing="2"
+                           Foreground="{DynamicResource AccentBrush}"/>
+            </Border>
+
+            <TextBlock x:Name="UrlHintText" FontSize="12" Opacity="0.7" TextAlignment="Center"
+                       TextWrapping="Wrap" Foreground="{DynamicResource TextBrush}" IsVisible="False"/>
+
+            <StackPanel x:Name="ActionButtonsPanel" Orientation="Horizontal" Spacing="10"
+                        HorizontalAlignment="Center" IsVisible="False">
+                <Button Classes="accent" Content="Открыть браузер" Click="OnOpenBrowserClick"
+                        Padding="14,8" Background="{DynamicResource AccentBrush}" Foreground="{DynamicResource TextBrush}"/>
+                <Button Classes="secondary" Content="Скопировать код" Click="OnCopyCodeClick"
+                        Padding="14,8" Background="{DynamicResource PanelBrush}" Foreground="{DynamicResource TextBrush}"/>
+            </StackPanel>
+
+            <TextBlock x:Name="ErrorText" FontSize="12" Foreground="#E05050" TextAlignment="Center"
+                       TextWrapping="Wrap" IsVisible="False"/>
+
+            <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
+                <Button x:Name="RetryButton" Classes="secondary" Content="Повторить" Click="OnRetryClick"
+                        Padding="14,8" Background="{DynamicResource PanelBrush}" Foreground="{DynamicResource TextBrush}"
+                        IsVisible="False"/>
+                <Button Classes="secondary" Content="Отмена" Click="OnCancelClick"
+                        Padding="14,8" Background="{DynamicResource PanelBrush}" Foreground="{DynamicResource TextBrush}"/>
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+    </Border>
+</Window>

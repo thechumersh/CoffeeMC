@@ -1,0 +1,64 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:models="using:CoffeeMC.App.Models"
+        x:Class="CoffeeMC.App.Views.LaunchProgressWindow"
+        Title="Coffee MC"
+        Width="480" Height="340"
+        WindowDecorations="None"
+        CanResize="False"
+        Opacity="0"
+        Background="Transparent">
+
+    <Window.Transitions>
+        <Transitions>
+            <DoubleTransition Property="Opacity" Duration="0:0:0.25"/>
+        </Transitions>
+    </Window.Transitions>
+
+    <Border CornerRadius="{DynamicResource UiCornerRadius}" ClipToBounds="True"
+            Background="{DynamicResource BackgroundBrush}">
+        <Grid RowDefinitions="36,*">
+
+            <Border Grid.Row="0" Background="{DynamicResource PanelBrush}" PointerPressed="OnTitleBarPointerPressed">
+                <Grid ColumnDefinitions="*,Auto">
+                    <TextBlock Grid.Column="0" Text="Coffee MC" VerticalAlignment="Center" Margin="12,0,0,0"
+                               Foreground="{DynamicResource TextBrush}" FontSize="13"/>
+                    <Button Grid.Column="1" Classes="titlebar titlebar-close" Content="✕" Click="OnCloseClick"
+                            Width="46" Height="36" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                            FontSize="14" Background="Transparent" Foreground="{DynamicResource TextBrush}"/>
+                </Grid>
+            </Border>
+
+            <Grid Grid.Row="1" Margin="20,16,20,16" RowDefinitions="Auto,Auto,Auto,*,Auto">
+
+                <TextBlock Grid.Row="0" x:Name="StageText" Text="{DynamicResource LaunchProgress_Preparing}" FontSize="15" FontWeight="Bold"
+                           Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,4"/>
+                <TextBlock Grid.Row="1" x:Name="CurrentActionText" FontSize="12" Opacity="0.7"
+                           Foreground="{DynamicResource TextBrush}" TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                <ProgressBar Grid.Row="2" x:Name="StepProgressBar" Minimum="0" Maximum="100"
+                             Height="8" CornerRadius="4" Margin="0,0,0,14"
+                             Foreground="{DynamicResource AccentBrush}"/>
+
+                <Border Grid.Row="3" CornerRadius="6" Background="{DynamicResource PanelBrush}">
+                    <ScrollViewer x:Name="LogScrollViewer" Padding="8">
+                        <ItemsControl x:Name="LogItemsControl">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="models:LogDisplayLine">
+                                    <SelectableTextBlock Text="{Binding Text}" Foreground="{Binding Foreground}"
+                                                         FontWeight="{Binding Weight}" TextWrapping="{Binding Wrapping}"
+                                                         FontFamily="Consolas,monospace" FontSize="10" Margin="0,1"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Border>
+
+                <Button Grid.Row="4" Classes="secondary" Content="{DynamicResource LaunchProgress_Close}" Click="OnCloseClick"
+                        HorizontalAlignment="Right" Margin="0,12,0,0"
+                        Padding="14,8" Background="{DynamicResource PanelBrush}" Foreground="{DynamicResource TextBrush}"/>
+
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

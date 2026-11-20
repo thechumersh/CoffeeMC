@@ -1,0 +1,102 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="CoffeeMC.App.Views.EditProfileWindow"
+        Title="{DynamicResource EditProfile_Title}"
+        Width="520" Height="680"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False"
+        WindowDecorations="None"
+        Background="Transparent"
+        Opacity="0">
+
+    <Window.Transitions>
+        <Transitions>
+            <DoubleTransition Property="Opacity" Duration="0:0:0.25"/>
+        </Transitions>
+    </Window.Transitions>
+
+    <Border CornerRadius="{DynamicResource UiCornerRadius}" ClipToBounds="True"
+            Background="{DynamicResource BackgroundBrush}">
+        <Grid RowDefinitions="36,*,Auto">
+
+            <Border Grid.Row="0" Background="{DynamicResource PanelBrush}" PointerPressed="OnTitleBarPointerPressed">
+                <Grid ColumnDefinitions="*,Auto">
+                    <TextBlock Grid.Column="0" Text="{DynamicResource EditProfile_Title}" VerticalAlignment="Center"
+                               Margin="12,0,0,0" Foreground="{DynamicResource TextBrush}" FontSize="13"/>
+                    <Button Grid.Column="1" Classes="titlebar titlebar-close" Content="✕" Click="OnCancelClick"
+                            Width="46" Height="36" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                            FontSize="14" Background="Transparent" Foreground="{DynamicResource TextBrush}"/>
+                </Grid>
+            </Border>
+
+            <ScrollViewer Grid.Row="1" Padding="0,0,12,0" Margin="20,16,8,0">
+                <StackPanel Spacing="6">
+
+                    <TextBlock Text="{DynamicResource CreateProfile_NameLabel}" Foreground="{DynamicResource TextBrush}"/>
+                    <TextBox x:Name="NameBox" PlaceholderText="{DynamicResource CreateProfile_NamePlaceholder}" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="{DynamicResource CreateProfile_VersionLabel}" Foreground="{DynamicResource TextBrush}"/>
+                    <WrapPanel Margin="0,4,0,4">
+                        <CheckBox x:Name="FilterRelease" Content="{DynamicResource CreateProfile_FilterRelease}" IsChecked="True"
+                                  Click="OnFilterChanged" Foreground="{DynamicResource TextBrush}" Margin="0,0,12,4"/>
+                        <CheckBox x:Name="FilterSnapshot" Content="{DynamicResource CreateProfile_FilterSnapshot}" IsChecked="True"
+                                  Click="OnFilterChanged" Foreground="{DynamicResource TextBrush}" Margin="0,0,12,4"/>
+                        <CheckBox x:Name="FilterBeta" Content="{DynamicResource CreateProfile_FilterBeta}"
+                                  Click="OnFilterChanged" Foreground="{DynamicResource TextBrush}" Margin="0,0,12,4"/>
+                        <CheckBox x:Name="FilterAlpha" Content="{DynamicResource CreateProfile_FilterAlpha}"
+                                  Click="OnFilterChanged" Foreground="{DynamicResource TextBrush}" Margin="0,0,12,4"/>
+                        <CheckBox x:Name="FilterLocal" Content="{DynamicResource CreateProfile_FilterLocal}"
+                                  Click="OnFilterChanged" Foreground="{DynamicResource TextBrush}" Margin="0,0,12,4"/>
+                    </WrapPanel>
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBox x:Name="SearchBox" PlaceholderText="{DynamicResource CreateProfile_SearchPlaceholder}"
+                                 TextChanged="OnSearchChanged"/>
+                        <Button Grid.Column="1" Classes="secondary" Content="{DynamicResource Profile_RefreshVersions}"
+                                Click="OnRefreshVersionsClick" Margin="8,0,0,0" Padding="12,0"
+                                VerticalAlignment="Stretch" VerticalContentAlignment="Center"
+                                Background="{DynamicResource PanelBrush}" Foreground="{DynamicResource TextBrush}"/>
+                    </Grid>
+                    <ListBox x:Name="VersionsList" Height="150" Background="{DynamicResource PanelBrush}"
+                             SelectionChanged="OnVersionSelectionChanged" Margin="0,0,0,10">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" Foreground="{DynamicResource TextBrush}" Margin="8,3"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <TextBlock Text="{DynamicResource EditProfile_JavaLabel}" Foreground="{DynamicResource TextBrush}"/>
+                    <Grid ColumnDefinitions="*,Auto,Auto" Margin="0,0,0,10">
+                        <TextBox Grid.Column="0" x:Name="JavaBox" IsReadOnly="True"/>
+                        <Button Grid.Column="1" Classes="secondary" Content="{DynamicResource EditProfile_JavaChoose}" Click="OnChooseJavaClick"
+                                Margin="8,0,0,0" Padding="12,7"
+                                Background="{DynamicResource PanelBrush}" Foreground="{DynamicResource TextBrush}"/>
+                        <Button Grid.Column="2" Classes="secondary" Content="{DynamicResource EditProfile_JavaReset}" Click="OnResetJavaClick"
+                                Margin="6,0,0,0" Padding="12,7"
+                                Background="{DynamicResource PanelBrush}" Foreground="{DynamicResource TextBrush}"/>
+                    </Grid>
+
+                    <TextBlock Text="{DynamicResource EditProfile_JvmLabel}" Foreground="{DynamicResource TextBrush}"/>
+                    <TextBox x:Name="JvmBox" AcceptsReturn="True" TextWrapping="Wrap" Height="70"
+                             PlaceholderText="{DynamicResource EditProfile_JvmHint}" Margin="0,0,0,10"/>
+
+                    <TextBlock Text="{DynamicResource EditProfile_GameLabel}" Foreground="{DynamicResource TextBrush}"/>
+                    <TextBox x:Name="GameArgsBox" AcceptsReturn="True" TextWrapping="Wrap" Height="70"
+                             PlaceholderText="{DynamicResource EditProfile_GameHint}" Margin="0,0,0,6"/>
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <StackPanel Grid.Row="2" Margin="20,8,20,16" Spacing="8">
+                <TextBlock x:Name="ErrorText" Foreground="#E05050" FontSize="12" TextWrapping="Wrap" IsVisible="False"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+                    <Button Classes="secondary" Content="{DynamicResource CreateProfile_Cancel}" Click="OnCancelClick" Padding="14,8"
+                            Background="{DynamicResource PanelBrush}" Foreground="{DynamicResource TextBrush}"/>
+                    <Button Classes="accent" Content="{DynamicResource EditProfile_Save}" Click="OnSaveClick" Padding="14,8"
+                            Background="{DynamicResource AccentBrush}" Foreground="{DynamicResource TextBrush}"/>
+                </StackPanel>
+            </StackPanel>
+
+        </Grid>
+    </Border>
+</Window>

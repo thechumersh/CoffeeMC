@@ -1,0 +1,46 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="CoffeeMC.App.Views.PinPromptWindow"
+        Title="PIN"
+        Width="320" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False"
+        WindowDecorations="None"
+        Background="Transparent"
+        Opacity="0">
+
+    <Window.Transitions>
+        <Transitions>
+            <DoubleTransition Property="Opacity" Duration="0:0:0.25"/>
+        </Transitions>
+    </Window.Transitions>
+
+    <Border CornerRadius="{DynamicResource UiCornerRadius}" ClipToBounds="True"
+            Background="{DynamicResource BackgroundBrush}">
+        <StackPanel>
+
+            <Border Height="36" Background="{DynamicResource PanelBrush}" PointerPressed="OnTitleBarPointerPressed">
+                <Grid ColumnDefinitions="*,Auto">
+                    <TextBlock Grid.Column="0" x:Name="TitleText" Text="PIN" VerticalAlignment="Center"
+                               Margin="12,0,0,0" Foreground="{DynamicResource TextBrush}" FontSize="13"/>
+                    <Button Grid.Column="1" Classes="titlebar titlebar-close" Content="✕" Click="OnCancelClick"
+                        Width="46" Height="36" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        FontSize="14" Background="Transparent" Foreground="{DynamicResource TextBrush}"/>
+                </Grid>
+            </Border>
+
+            <StackPanel Margin="20" Spacing="10">
+                <TextBox x:Name="PinBox" PasswordChar="•" PlaceholderText="PIN" KeyDown="OnPinKeyDown"/>
+                <TextBox x:Name="ConfirmBox" PasswordChar="•" IsVisible="False" KeyDown="OnPinKeyDown"/>
+                <TextBlock x:Name="ErrorText" Foreground="#E05050" FontSize="12" IsVisible="False" TextWrapping="Wrap"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10" Margin="0,8,0,0">
+                    <Button Classes="secondary" Content="Отмена" Click="OnCancelClick"
+                            Padding="14,8" Background="{DynamicResource PanelBrush}" Foreground="{DynamicResource TextBrush}"/>
+                    <Button Classes="accent" Content="OK" Click="OnOkClick"
+                            Padding="14,8" Background="{DynamicResource AccentBrush}" Foreground="{DynamicResource TextBrush}"/>
+                </StackPanel>
+            </StackPanel>
+
+        </StackPanel>
+    </Border>
+</Window>
