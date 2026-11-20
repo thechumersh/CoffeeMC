@@ -31,7 +31,7 @@
 
 ### Сборка из исходного кода
 ```bash
-git clone https://github.com
+git clone https://github.com/thechumersh/CoffeeMC.git
 cd CoffeeMC
 dotnet run
 ```
