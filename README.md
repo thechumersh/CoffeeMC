@@ -6,7 +6,7 @@
 [![Avalonia UI](https://shields.io)](https://avaloniaui.net)
 [![License](https://shields.io)](LICENSE)
 
-🇷🇺 **[Читать на русском](README.ru.md)**
+🇷🇺 **[Читать на русском](README_ru.md)**
 
 A lightweight, cross-platform Minecraft launcher built with **C#**, **Avalonia UI**, and **.NET 10**. Designed as a modern, native-feeling alternative without heavy dependencies like Qt.
 
