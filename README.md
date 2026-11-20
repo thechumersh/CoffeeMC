@@ -1,4 +1,4 @@
-# [Launcher Name]
+# [CoffeeMC]
 
 [![.NET](https://shields.io)](https://microsoft.com)
 [![Avalonia UI](https://shields.io)](https://avaloniaui.net)
