@@ -1,4 +1,4 @@
-![Launcher Screenshot](assets/screenshot.png)
+![Launcher Screenshot](assets/screenshot.jpg)
 
 # CoffeeMC - MC launcher
 
