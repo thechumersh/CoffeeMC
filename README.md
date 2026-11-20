@@ -18,7 +18,7 @@ A lightweight, cross-platform Minecraft launcher built with **C#**, **Avalonia U
 * **High Performance:** Compiled with .NET 10 for fast startup and low memory footprint.
 * **Authentication:** [Microsoft Account / Offline mode]
 * **Version Management:** Easy installation and launching of Vanilla, Forge, Fabric, and NeoForge versions.
-* **Modpack & Instance Support:**
+* **Modpack & Instance Support**
 
 ## 🚀 Getting Started
 
