@@ -49,10 +49,6 @@ dotnet publish -r win-x64 -c Release /p:PublishSingleFile=true --self-contained 
 * **Framework:** .NET 10
 * **UI Framework:** Avalonia UI
 
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](../../issues).
-
 ## 📝 License
 
 This project is licensed under the [MIT License](LICENSE).
