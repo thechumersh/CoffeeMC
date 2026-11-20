@@ -26,19 +26,19 @@ A lightweight, cross-platform Minecraft launcher built with **C#**, **Avalonia U
 
 ### Installation (Release)
 1. Go to the [Releases](../../releases) page.
-2. Download the archive for your OS (`win-x64`, `linux-x64`, `osx-arm64`, etc.).
+2. Download the archive for your OS (`win-x64`).
 3. Extract and run the executable.
 
 ### Building from Source
 ```bash
 git clone https://github.com[username]/[repo-name].git
 cd [repo-name]
-dotnet run --project src/[ProjectName].csproj
+dotnet run
 ```
 
 To publish a standalone executable:
 ```bash
-dotnet publish -c Release -r win-x64 --self-contained
+dotnet publish -r win-x64 -c Release /p:PublishSingleFile=true --self-contained true /p:IncludeNativeLibrariesForSelfContained=true
 ```
 
 ## 🛠️ Tech Stack
@@ -46,7 +46,6 @@ dotnet publish -c Release -r win-x64 --self-contained
 * **Language:** C# 14
 * **Framework:** .NET 10
 * **UI Framework:** Avalonia UI
-* **Minecraft Core Library:** [CmlLib.Core / своя реализация — укажи библиотеку, если использовал]
 
 ## 🤝 Contributing
 
