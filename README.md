@@ -33,7 +33,7 @@ A lightweight, cross-platform Minecraft launcher built with **C#**, **Avalonia U
 
 ### Building from Source
 ```bash
-git clone https://github.com[username]/[repo-name].git
+git clone https://github.com/thechumersh/CoffeeMC.git
 cd [repo-name]
 dotnet run
 ```
