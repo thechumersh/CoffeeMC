@@ -34,7 +34,7 @@ A lightweight, cross-platform Minecraft launcher built with **C#**, **Avalonia U
 ### Building from Source
 ```bash
 git clone https://github.com/thechumersh/CoffeeMC.git
-cd [repo-name]
+cd CoffeeMC
 dotnet run
 ```
 
@@ -48,6 +48,11 @@ dotnet publish -r win-x64 -c Release /p:PublishSingleFile=true --self-contained 
 * **Language:** C# 14
 * **Framework:** .NET 10
 * **UI Framework:** Avalonia UI
+
+## ⚙ Supports any OS (official .NET-based support)
+* **Windows:** 10 (1607)
+* **Linux:** kernel 4.18 / 5.4 - Debian 13, Ubuntu 22.04 LTS (22.04 & 26.02), and others
+* **MacOS:** 14 (sonnara) and above
 
 ## 📝 License
 
