@@ -23,7 +23,7 @@ A lightweight, cross-platform Minecraft launcher built with **C#**, **Avalonia U
 ## 🚀 Getting Started
 
 ### Prerequisites
-* [.NET 10 SDK](https://microsoft.comdownload/dotnet/10.0) (for building from source)
+* [.NET 10 SDK](https://dotnet.microsoft.com/ru-ru/download/dotnet/10.0) (for building from source)
 * Java 8 / 17 / 21 (depending on the Minecraft version you want to play)
 
 ### Installation (Release)
