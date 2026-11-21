@@ -47,6 +47,11 @@ dotnet publish -r win-x64 -c Release /p:PublishSingleFile=true --self-contained 
 * **Платформа:** .NET 10
 * **UI Фреймворк:** Avalonia UI
 
+## ⚙ Поддержка любой ос (официальная поддержка на базе .NET SDK 10)
+* **Windows:** 10 (1607)
+* **Linux:** ядро 4.18 / 5.4 - Debian 13, Ubuntu 22.04 LTS (22.04 & 26.02), и другие
+* **MacOS:** 14 (sonnara) и выше
+
 ## 📝 Лицензия
 
 Проект распространяется под лицензией [MIT License](LICENSE).
