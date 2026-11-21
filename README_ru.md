@@ -21,7 +21,7 @@
 ## 🚀 Начало работы
 
 ### Требования
-* [.NET 10 SDK](https://microsoft.comdownload/dotnet/10.0) (для сборки из исходного кода)
+* [.NET 10 SDK](https://dotnet.microsoft.com/ru-ru/download/dotnet/10.0) (для сборки из исходного кода)
 * Java 8 / 17 / 21 (в зависимости от версии Minecraft, в которую вы хотите играть)
 
 ### Установка (Готовая сборка)
