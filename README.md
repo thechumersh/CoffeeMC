@@ -2,7 +2,7 @@
 
 # CoffeeMC - MC launcher
 
-[![.NET](https://img.shields.io/badges/.NET-10-512bd4)](https://dotnet.microsoft.com/en-us/download/10.0)
+[![.NET](https://img.shields.io/badge/.NET-10-512bd4)](https://dotnet.microsoft.com/en-us/download/10.0)
 [![Avalonia UI](https://img.shields.io/badge/-AVALONIA%20UI-blueviolet?logo=avalonia)](https://avaloniaui.net)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
