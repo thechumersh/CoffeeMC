@@ -10,8 +10,6 @@ RU **[Читать на русском](README_ru.md)**
 
 A lightweight, cross-platform Minecraft launcher built with **C#**, **Avalonia UI**, and **.NET 10**. Designed as a modern, native-feeling alternative without heavy dependencies like Qt.
 
-![Screenshot Placeholder](assets/screenshot.png)
-
 ## ✨ Features
 
 * **Cross-Platform:** Runs natively on Windows, Linux, and macOS thanks to Avalonia UI.
